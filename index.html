@@ -15,6 +15,7 @@
 </head>
 
 <body id="bodi">
+    <!-- HALAMAN PERTAMA -->
     <div class="borders" style="text-align: center;" id="tembok1">
         <div class="card">
             <div class="img"> <span></span><span></span><span></span><span></span></div>
@@ -24,50 +25,71 @@
             </div>
         </div>
         <br><br>
-        <button onclick="openFullscreen()" class="tombols">Tekan buat lihat hadiah</button>
+        <!-- Ditambahkan fungsi ganti halaman langsung pada onclick jika openFullscreen() bermasalah -->
+        <button onclick="bukaHadiah(); openFullscreen();" class="tombols">Tekan buat lihat hadiah</button>
     </div>
+
+    <!-- HALAMAN KEDUA -->
     <div class="borders" id="tembok2" style="display: none;">
         <h1 class="wafanisa --debug">
-            <span class="wafanisa__row">
-                <span class="wafanisa__text">SELAMAT MENIKMATI</span>
-            </span>
-            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true">
-                <span class="wafanisa__text">SELAMAT MENIKMATI </span>
-            </span>
-            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true">
-                <span class="wafanisa__text"> SELAMAT MENIKMATI</span>
-            </span>
-            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true">
-                <span class="wafanisa__text">SELAMAT MENIKMATI</span>
-            </span>
-            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true">
-                <span class="wafanisa__text">SELAMAT MENIKMATI</span>
-            </span>
-            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true">
-                <span class="wafanisa__text">SELAMAT MENIKMATI</span>
-            </span>
+            <span class="wafanisa__row"><span class="wafanisa__text">SELAMAT MENIKMATI</span></span>
+            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true"><span class="wafanisa__text">SELAMAT MENIKMATI </span></span>
+            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true"><span class="wafanisa__text"> SELAMAT MENIKMATI</span></span>
+            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true"><span class="wafanisa__text">SELAMAT MENIKMATI</span></span>
+            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true"><span class="wafanisa__text">SELAMAT MENIKMATI</span></span>
+            <span class="wafanisa__row wafanisa__row--sibling" aria-hidden="true"><span class="wafanisa__text">SELAMAT MENIKMATI</span></span>
         </h1>
         <h1 class="ml1">
             <span class="text-wrapper">
                 <span class="line line1"></span>
-            <span class="letters">SPESIAL FOR U</span>
-            <span class="line line2"></span>
+                <span class="letters">SPESIAL FOR U</span>
+                <span class="line line2"></span>
             </span>
         </h1>
-
         <br>
         <div class="kontener">
             <p id="tekss" style="font-size: 18px;"></p>
         </div>
     </div>
 
-
-
-    <audio id="mySound" src="love.mp3" loop controls></audio>
-
+    <!-- AUDIO PEMUTAR BERULANG -->
+    <audio id="mySound" src="love.mp3" loop controls style="display: none;"></audio>
 
     <script src="script.js"></script>
     <script src="salju.js"></script>
+
+    <!-- JAVASCRIPT TAMBAHAN UNTUK FIX HP -->
+    <script>
+        // 1. Fungsi transisi halaman aman untuk HP dan memutar musik otomatis saat tombol ditekan
+        function bukaHadiah() {
+            document.getElementById('tembok1').style.display = 'none';
+            document.getElementById('tembok2').style.display = 'block';
+            
+            // Putar lagu otomatis setelah user berinteraksi klik tombol
+            const audio = document.getElementById('mySound');
+            if(audio) {
+                audio.play().catch(function(error) {
+                    console.log("Musik diblokir browser: " + error);
+                });
+            }
+        }
+
+        // 2. Fungsi Fullscreen cadangan agar tidak error jika browser HP memblokir fiturnya
+        function openFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) { elem.requestFullscreen(); } 
+            else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); } 
+            else if (elem.msRequestFullscreen) { elem.msRequestFullscreen(); }
+        }
+
+        // 3. Efek ketukan jari khusus untuk animasi .card di HP
+        const card = document.querySelector('.card');
+        if(card) {
+            card.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        }
+    </script>
 </body>
 
 </html>
